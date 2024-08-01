@@ -1,5 +1,6 @@
 package com.javalab.boot.controller;
 
+import com.javalab.boot.dto.CompanyJoinDTO;
 import com.javalab.boot.dto.MemberFormDto;
 import com.javalab.boot.entity.Member;
 import com.javalab.boot.security.dto.MemberSecurityDTO;
@@ -28,7 +29,27 @@ public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
 
-    // 회원 가입 화면
+
+    @GetMapping("/classification")
+    public String showClassificationPage() {
+        log.info("Classification page requested");
+        return "member/classification";
+    }
+
+
+    // 기업 회원 가입 화면
+    @GetMapping(value = "/companyJoin")
+    public String companyMemberForm(Model model){
+        model.addAttribute("CompanyJoinDTO", new CompanyJoinDTO());
+        return "member/companyJoin";
+    }
+
+
+
+
+
+
+  /*  // 회원 가입 화면
     @GetMapping(value = "/join")
     public String memberForm(Model model){
         model.addAttribute("memberFormDto", new MemberFormDto());
@@ -57,7 +78,7 @@ public class MemberController {
         }
 
         return "redirect:/member/login"; //회원 가입 후 로그인
-    }
+    }*/
 
     // 로그인 화면
     @GetMapping(value = "/login")

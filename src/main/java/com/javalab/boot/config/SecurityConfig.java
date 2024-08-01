@@ -77,10 +77,10 @@ public class SecurityConfig {
 						.deleteCookies("JSESSIONID")
 				)
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**", "/ckeditor2/**", "/vendor/**", "/assets/**").permitAll()
+						.requestMatchers("/css/**", "/js/**", "/images/**", "/fonts/**", "/ckeditor2/**", "/vendor/**", "/assets/**", "/lib/**", "/img/**", "/scss/**").permitAll()
 						.requestMatchers("/", "/home", "/about", "/contact").permitAll()  // 필요에 따라 추가
 						.requestMatchers("/view/**").permitAll()
-						.requestMatchers("/member/login", "/member/action", "/member/join/**").permitAll()
+						.requestMatchers("/member/login", "/member/action", "/member/classification", "/member/companyJoin", "/member/join").permitAll()
 						//.requestMatchers("/member/modify").hasRole("USER")
 						.requestMatchers("/member/modify").permitAll()
 						.requestMatchers("/board/**").permitAll()

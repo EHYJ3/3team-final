@@ -24,7 +24,7 @@ public class MainController {
                        Model model) {
         PageResponseDTO<ItemFormDTO> responseDTO = itemService.list(pageRequestDTO);
         model.addAttribute("responseDTO", responseDTO);
-        return "main";
+        return "index";
     }
 
 }
