@@ -59,52 +59,45 @@ public class SecurityConfig {
     // Main SecurityFilterChain Bean
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         log.info("------------configure-------------------");
 
         // Build AuthenticationManager
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(apiUserDetailsService).passwordEncoder(passwordEncoder());
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
-
-        // Set custom AuthenticationManager
         http.authenticationManager(authenticationManager);
 
         // APILoginFilter 설정
-        // "/generateToken" 경로로 들어오는 요청을 처리, /generateToken 엔드포인트는 클라이언트가
-        // 서버에 로그인 요청을 할 때 사용하는 경로, UsernamePasswordAuthenticationToken을 생성
-        // 하고 인증 매니저에게 전달, 인증 매니저는 UserDetailsService를 통해 사용자 정보를 가져와서 인증 처리
         APILoginFilter apiLoginFilter = new APILoginFilter("/generateToken");
         apiLoginFilter.setAuthenticationManager(authenticationManager);
 
-        // [3] APILoginSuccessHandler - APILoginFilter 인증 성공시 즉시 실행
-        // JWT Token을 생성해서 클라이언트에게 응답, 이때 필요한 JWTUtil을 주입.
-        APILoginSuccessHandler successHandler = new APILoginSuccessHandler(jwtUtil); // Create success handler
-        apiLoginFilter.setAuthenticationSuccessHandler(successHandler); // Set success handler
+        // [3] APILoginSuccessHandler
+        APILoginSuccessHandler successHandler = new APILoginSuccessHandler(jwtUtil);
+        apiLoginFilter.setAuthenticationSuccessHandler(successHandler);
 
         // [2] APILoginFilter
         http.addFilterBefore(apiLoginFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // [4] 토큰 체크 필터 - 클라이언트의 모든 요청에 대해 적용. 토큰이 유효하지 않거나 없는 경우 요청 차단
+        // [4] TokenCheckFilter
         http.addFilterBefore(tokenCheckFilter(jwtUtil, apiUserDetailsService), UsernamePasswordAuthenticationFilter.class);
 
-        // [3] 리프레시 토큰 필터 - TokenCheckFilter보다 앞서 있는 이유는 만료된 액세스 토큰을 자동으로 새로 발급받고 검증받기 위함
+        // [3] RefreshTokenFilter
         http.addFilterBefore(new RefreshTokenFilter("/refreshToken", jwtUtil), TokenCheckFilter.class);
 
         // Disable CSRF and configure session management
         http.csrf(csrf -> csrf.disable());
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // [1] CORS configuration(가장 먼저 호출되는 필터 설정)
+        // [1] CORS configuration
         http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()));
 
         // Configure HTTP security
         http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                        .requestMatchers(HttpMethod.GET, "/public/**", "/").permitAll() // Example of permitting public GET access
+                        .requestMatchers(HttpMethod.GET, "/public/**", "/").permitAll()
                         .requestMatchers(HttpMethod.POST, "/generateToken", "/refreshToken").permitAll()
-                        // Swagger UI 관련 경로를 허용
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/memberList").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**").permitAll()  // Allow static resources
                         .anyRequest().authenticated()
         );
 
@@ -128,4 +121,6 @@ public class SecurityConfig {
     private TokenCheckFilter tokenCheckFilter(JWTUtil jwtUtil, APIUserDetailsService apiUserDetailsService) {
         return new TokenCheckFilter(apiUserDetailsService, jwtUtil);
     }
+
+
 }
