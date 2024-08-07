@@ -94,7 +94,7 @@ public class SecurityConfig {
         // Configure HTTP security
         http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                        .requestMatchers(HttpMethod.GET, "/public/**", "/").permitAll() // Example of permitting public GET access
+                        .requestMatchers(HttpMethod.GET, "/public/**", "/", "/member/**").permitAll() // Example of permitting public GET access
                         .requestMatchers(HttpMethod.POST, "/generateToken", "/refreshToken").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/memberList").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**").permitAll()  // Allow static resources
