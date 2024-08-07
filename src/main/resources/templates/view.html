@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Details</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h3>Employee Details</h3>
+    <table>
+        <tr>
+            <th>ID</th>
+            <td th:text="${employee.employeeId}"></td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td th:text="${employee.firstName} + ' ' + ${employee.lastName}"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td th:text="${employee.email}"></td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td th:text="${employee.phoneNumber}"></td>
+        </tr>
+        <tr>
+            <th>Hire Date</th>
+            <td th:text="${employee.hireDate}"></td>
+        </tr>
+        <tr>
+            <th>Job ID</th>
+            <td th:text="${employee.jobId}"></td>
+        </tr>
+        <tr>
+            <th>Salary</th>
+            <td th:text="${employee.salary}"></td>
+        </tr>
+        <tr>
+            <th>Commission Pct</th>
+            <td th:text="${employee.commissionPct}"></td>
+        </tr>
+        <tr>
+            <th>Manager ID</th>
+            <td th:text="${employee.managerId}"></td>
+        </tr>
+        <tr>
+            <th>Department ID</th>
+            <td th:text="${employee.departmentId}"></td>
+        </tr>
+    </table>
+    <p th:if="${employee == null}">Employee not found</p>
+    
+	<div class="list-button">
+		<a href="/emp/list">List</a>
+	</div>
+</body>
+</html>

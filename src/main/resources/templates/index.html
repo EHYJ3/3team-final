@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+<h3>Hello Everyone</h3>
+<br><br>
+현재시간 : <p th:text="${date}">current date</p>
+
+<h3>애국가</h3>
+<br>
+<p> 동해물과 백두사이 마르고 닳도록 </p>
+
+<!-- 개인회원 가입 버튼 추가 -->
+<br><br>
+<a th:href="@{/members/join}" style="display: inline-block; padding: 10px 20px; font-size: 16px; color: #fff; background-color: #007bff; text-decoration: none; border-radius: 5px;">개인회원 가입</a>
+</body>
+</html>
