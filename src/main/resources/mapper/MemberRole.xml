@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javalab.board.mapper.MemberRoleMapper">
+
+    <!-- 회원-역할 관계 조회 -->
+    <select id="getMemberRoles" parameterType="long" resultType="MemberRole">
+        SELECT member_id, role_id
+        FROM member_roles
+        WHERE member_id = #{memberId}
+    </select>
+
+    <!-- 회원-역할 관계 삽입 -->
+    <insert id="insertMemberRole" parameterType="MemberRole">
+        INSERT INTO member_roles (member_id, role_id)
+        VALUES (#{memberId}, #{roleId})
+    </insert>
+
+    <!-- 회원-역할 관계 삭제 -->
+    <delete id="deleteMemberRole" parameterType="MemberRole">
+        DELETE FROM member_roles
+        WHERE member_id = #{memberId} AND role_id = #{roleId}
+    </delete>
+
+</mapper>

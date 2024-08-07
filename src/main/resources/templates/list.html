@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <!-- Inline Style Sheet -->
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+<table>
+    <caption>사원목록</caption>
+    <tr>
+        <td width="50px" align="center">id</td>
+        <td align="center">name</td>
+        <td align="center">email</td>
+        <td align="center">phoneNumber</td>
+        <td align="center">hireDate</td>
+        <td align="center">jobId</td>
+        <td align="center">salary</td>
+        <td align="center">pct</td>
+        <td align="center">managerId</td>
+        <td align="center">departmentId</td>
+    </tr>
+
+    <tr th:each="employee : ${list}">
+        <td>
+            <a th:href="@{/emp/read(employeeId=${employee.employeeId})}">
+                <span th:text="${employee.employeeId}"></span>
+            </a>
+        </td>
+        <td><span th:text="${employee.firstName} + ' ' + ${employee.lastName}"></span></td>
+        <td><span th:text="${employee.email}"></span></td>
+        <td><span th:text="${employee.phoneNumber}"></span></td>
+        <td><span th:text="${employee.hireDate}"></span></td>
+        <td><span th:text="${employee.jobId}"></span></td>
+        <td><span th:text="${employee.salary}"></span></td>
+        <td><span th:text="${employee.commissionPct}"></span></td>
+        <td><span th:text="${employee.managerId}"></span></td>
+        <td><span th:text="${employee.departmentId}"></span></td>
+    </tr>
+
+</table>
+</body>
+</html>

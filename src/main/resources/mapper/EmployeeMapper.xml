@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	<!-- 매퍼XML : Employees 에 대한 모든 쿼리문 보관 -->
+	<mapper namespace="com.javalab.board.repository.EmployeeDao">
+
+	 <select id="getEmployeesList" resultType="EmployeeCommonDto">
+		SELECT EMPLOYEE_ID, 
+			FIRST_NAME, 
+			LAST_NAME, 
+			EMAIL, 
+			PHONE_NUMBER, 
+			HIRE_DATE, 
+			JOB_ID, 
+			SALARY, 
+			COMMISSION_PCT, 
+			MANAGER_ID, 
+			DEPARTMENT_ID 
+		FROM EMPLOYEES 
+		ORDER BY EMPLOYEE_ID
+	 </select>
+	 
+	 <select id="getEmployees" parameterType="int" 
+	 						resultType="EmployeeCommonDto">
+	 	SELECT EMPLOYEE_ID, 
+			FIRST_NAME, 
+			LAST_NAME, 
+			EMAIL, 
+			PHONE_NUMBER, 
+			HIRE_DATE, 
+			JOB_ID, 
+			SALARY, 
+			COMMISSION_PCT, 
+			MANAGER_ID, 
+			DEPARTMENT_ID  
+	 	FROM EMPLOYEES 
+ 		WHERE EMPLOYEE_ID = #{param1}		 
+	 </select>
+
+	<!-- 사원 등록 -->
+	<!-- MariaDB는 자동증가 컬럼에 값을 저장할 경우 
+		useGeneratedKeys, keyProperty 옵션 설정해야
+		날짜 저장시 STR_TO_DATE(#{hireDate}, '%Y-%m-%d') -->
+    <insert id="register" parameterType="Employees" 
+    		useGeneratedKeys="true" keyProperty="employeeId">
+    <![CDATA[
+        INSERT INTO EMPLOYEES(
+        	FIRST_NAME,
+        	LAST_NAME,
+        	EMAIL,
+        	PHONE_NUMBER,
+        	HIRE_DATE,
+        	JOB_ID,
+        	SALARY,
+        	COMMISSION_PCT,
+        	MANAGER_ID,
+        	DEPARTMENT_ID) 
+		VALUES (
+			  #{firstName, jdbcType=VARCHAR}
+			, #{lastName, jdbcType=VARCHAR}
+			, #{email, jdbcType=VARCHAR}
+			, #{phoneNumber, jdbcType=VARCHAR}
+			, STR_TO_DATE(#{hireDate}, '%Y-%m-%d')
+			, #{jobId, jdbcType=VARCHAR}
+			, #{salary, jdbcType=NUMERIC }
+			, #{commissionPct, jdbcType=NUMERIC }
+			, #{managerId, jdbcType=NUMERIC}
+			, #{departmentId, jdbcType=NUMERIC}
+		)
+	]]>	 
+    </insert>	 
+
+</mapper>
