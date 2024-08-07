@@ -44,6 +44,7 @@ dependencies {
     //runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     // thymeleaf template layout 관련 의존성
+
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.2.1'
 
 

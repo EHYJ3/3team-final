@@ -10,11 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/memberList")
+@RequestMapping("/member")
 public class MemberController {
 
     @Autowired
     private MemberVoService memberService;
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "member/login"; // This will look for a login.html file in the templates/member directory
+    }
+
+
+
 
     // 모든 회원 목록 페이지
     @GetMapping

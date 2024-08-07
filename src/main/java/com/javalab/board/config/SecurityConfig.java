@@ -54,6 +54,7 @@ public class SecurityConfig {
 
         return (web) -> web.ignoring()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+
     }
 
     // Main SecurityFilterChain Bean
@@ -98,13 +99,18 @@ public class SecurityConfig {
         // [1] CORS configuration(가장 먼저 호출되는 필터 설정)
         http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()));
 
+
+
+
+
         // Configure HTTP security
         http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                        .requestMatchers(HttpMethod.GET, "/public/**", "/").permitAll() // Example of permitting public GET access
+                        .requestMatchers(HttpMethod.GET, "/public/**", "/", "/member/**").permitAll() // Example of permitting public GET access
                         .requestMatchers(HttpMethod.POST, "/generateToken", "/refreshToken").permitAll()
                         // Swagger UI 관련 경로를 허용
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/memberList").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**").permitAll()
                         .anyRequest().authenticated()
         );
 

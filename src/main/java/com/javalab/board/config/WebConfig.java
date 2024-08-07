@@ -15,8 +15,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // Static resources such as CSS, JS, images
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("classpath:/static/css/");
 
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("classpath:/static/js/");
+
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("classpath:/static/img/");
+
+        registry.addResourceHandler("/lib/**")
+                .addResourceLocations("classpath:/static/lib/");
+
+        registry.addResourceHandler("/scss/**")
+                .addResourceLocations("classpath:/static/scss/");
     }
+}
 
     /**
      * 스프링부트3.x 버전
@@ -29,4 +44,4 @@ public class WebConfig implements WebMvcConfigurer {
 //    public void configurePathMatch(PathMatchConfigurer configurer) {
 //        configurer.setUseTrailingSlashMatch(true);
 //    }
-}
+
