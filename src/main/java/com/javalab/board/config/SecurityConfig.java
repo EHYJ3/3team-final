@@ -95,9 +95,9 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
                         .requestMatchers(HttpMethod.GET, "/public/**", "/", "/member/**").permitAll() // Example of permitting public GET access
-                        .requestMatchers(HttpMethod.POST, "/generateToken", "/refreshToken").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/memberList").permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**").permitAll()  // Allow static resources
+                        .requestMatchers(HttpMethod.POST, "/generateToken", "/refreshToken", "/member/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/img/**", "/lib/**", "/scss/**", "/assets/**").permitAll()  // Allow static resources
                         .anyRequest().authenticated()
         );
 

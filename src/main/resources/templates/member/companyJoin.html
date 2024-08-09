@@ -17,55 +17,46 @@
         <p class="subtitle">귀사의 정보를 입력해 주세요</p>
     </header>
     <main>
-        <form th:action="@{/member/companyJoin}" th:object="${CompanyJoinDTO}" method="post" class="signup-form">
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <form th:action="@{/member/companyJoin}" th:object="${CompanyVo}" method="post" class="signup-form">
+            <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> -->
+
+            <div class="form-group">
+                <label for="compId">회사 ID</label>
+                <input type="text" id="compId" th:field="*{compId}" placeholder="회사 ID를 입력해주세요" required>
+            </div>
 
             <div class="form-group">
                 <label for="companyName">회사명</label>
                 <input type="text" id="companyName" th:field="*{companyName}" placeholder="회사명을 입력해주세요" required>
-                <div th:if="${#fields.hasErrors('companyName')}" th:text="${#fields.errors('companyName')[0]}" class="fieldError"></div>
             </div>
 
             <div class="form-group">
                 <label for="businessNumber">사업자 등록번호</label>
                 <input type="text" id="businessNumber" th:field="*{businessNumber}" placeholder="사업자 등록번호를 입력해주세요" required>
-                <div th:if="${#fields.hasErrors('businessNumber')}" th:text="${#fields.errors('businessNumber')[0]}" class="fieldError"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="representativeName">대표자명</label>
-                <input type="text" id="representativeName" th:field="*{representativeName}" placeholder="대표자명을 입력해주세요" required>
-                <div th:if="${#fields.hasErrors('representativeName')}" th:text="${#fields.errors('representativeName')[0]}" class="fieldError"></div>
             </div>
 
             <div class="form-group">
                 <label for="email">이메일</label>
                 <input type="email" id="email" th:field="*{email}" placeholder="이메일을 입력해주세요" required>
-                <div th:if="${#fields.hasErrors('email')}" th:text="${#fields.errors('email')[0]}" class="fieldError"></div>
             </div>
 
             <div class="form-group">
                 <label for="password">비밀번호</label>
                 <input type="password" id="password" th:field="*{password}" placeholder="비밀번호를 입력해주세요" required>
-                <div th:if="${#fields.hasErrors('password')}" th:text="${#fields.errors('password')[0]}" class="fieldError"></div>
             </div>
 
             <div class="form-group">
-                <label for="confirmPassword">비밀번호 확인</label>
-                <input type="password" id="confirmPassword" th:field="*{confirmPassword}" placeholder="비밀번호를 다시 입력해주세요" required>
-                <div th:if="${#fields.hasErrors('confirmPassword')}" th:text="${#fields.errors('confirmPassword')[0]}" class="fieldError"></div>
+                <label for="address">회사 주소</label>
+                <input type="text" id="address" th:field="*{address}" placeholder="회사 주소를 입력해주세요" required>
             </div>
 
             <div class="form-group">
-                <label for="phoneNumber">연락처</label>
-                <input type="tel" id="phoneNumber" th:field="*{phoneNumber}" placeholder="연락처를 입력해주세요" required>
-                <div th:if="${#fields.hasErrors('phoneNumber')}" th:text="${#fields.errors('phoneNumber')[0]}" class="fieldError"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="companyAddress">회사 주소</label>
-                <input type="text" id="companyAddress" th:field="*{companyAddress}" placeholder="회사 주소를 입력해주세요" required>
-                <div th:if="${#fields.hasErrors('companyAddress')}" th:text="${#fields.errors('companyAddress')[0]}" class="fieldError"></div>
+                <label for="status">상태</label>
+                <select id="status" th:field="*{status}" required>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
             </div>
 
             <button type="submit" class="signup-button">
@@ -75,7 +66,7 @@
         </form>
     </main>
     <footer>
-        <p>이미 계정이 있으신가요? <a href="/login" class="login-link">로그인 <i class="ri-login-box-line"></i></a></p>
+        <p>이미 계정이 있으신가요? <a th:href="@{/member/login}" class="login-link">로그인 <i class="ri-login-box-line"></i></a></p>
     </footer>
 </div>
 </body>
