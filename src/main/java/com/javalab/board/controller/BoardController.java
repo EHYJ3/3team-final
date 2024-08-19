@@ -61,7 +61,10 @@ public class BoardController {
                         .hitNo(0)
                         .regDate(new Date())
                         .build())
+
+
                 .collect(Collectors.toList());
+        
     }
 
 
